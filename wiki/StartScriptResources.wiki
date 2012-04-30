@@ -2,6 +2,23 @@
 
 = Script.txt Resources =
 
+== ZKLobby ==
+
+All ZKL does is this:
+
+{{{
+[GAME]
+{
+HostIP=94.23.171.71;
+HostPort=8871;
+IsHost=0;
+MyPlayerName=[LCC]quantum[0K];
+MyPasswd=601449288;
+}
+}}}
+
+That might be sufficient for autohosts!
+
 == Spring Documentation ==
 
 https://github.com/spring/spring/blob/develop/doc/StartScriptFormat.txt
