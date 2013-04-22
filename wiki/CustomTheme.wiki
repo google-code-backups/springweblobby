@@ -7,6 +7,7 @@ You can create a custom theme with Weblobby to match your website or game. The U
 
  * Open http://weblobby.springrts.com/
  * Set up your desired colors in the settings tab.
+ * Clear your username and password from the settings tab, otherwise the URL will contain them!
  * Open Firebug and select the Cookies tab.
  * Expand the "settings" cookie.
  * Select the "Raw Data" tab and copy the text.
