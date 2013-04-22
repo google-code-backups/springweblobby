@@ -1,0 +1,14 @@
+#summary How to create a custom theme URL
+#labels theme,custom
+
+= Creating a Custom Theme in Weblobby =
+
+You can create a custom theme with Weblobby to match your website or game. The URL may contain a string which Weblobby loads as the default settings, until the user changes them and it gets saved to the user's cookies. To create the URL:
+
+ * Open http://weblobby.springrts.com/
+ * Set up the colors in the settings tab.
+ * Open Firebug and select the Cookies tab.
+ * Expand the "settings" cookie.
+ * Select the "Raw Data" tab and copy the text.
+ * Create a URL like so: http://weblobby.springrts.com?settings=<raw data here>
+ * Link to this URL or use an iframe.
