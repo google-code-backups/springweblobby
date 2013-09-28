@@ -24,7 +24,7 @@ This table compares common features of popular clients and weblobby. If a new fe
 || Text-To-Speech (ZK) || N || N || Y ||
 || Local Single Player || Y || Y || N ||
 || Local SP Start positions || N || Y || N/A ||
-|| Replay hosting || Untested (2) || Y || N ||
+|| Replay hosting || Untested (2) || ? || N ||
 || Replay viewing || Y || Y || ? ||
 || Multi-Engine Support || Y || ? || Y ||
 
