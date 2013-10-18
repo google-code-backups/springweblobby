@@ -11,7 +11,7 @@ This table compares common features of popular clients and weblobby. If a new fe
 || *Feature \ Client* || *Weblobby* || *Springlobby* || *ZKLobby* ||
 || Direct hosting || Untested (2) || Y || N ||
 || Relayhost || N || Y || N ||
-|| Map Options || Offline || Y || N ||
+|| Map Options || Y || Y || N ||
 || Springie support (1) || Y || N || Y ||
 || Springie box drawing || Y || N || N ||
 || Springie Voting Panel || Y || N || Y ||
