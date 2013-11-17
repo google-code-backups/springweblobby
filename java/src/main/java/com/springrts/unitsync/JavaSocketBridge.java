@@ -19,16 +19,16 @@ package com.springrts.unitsync;
 //       them to the main applet thread.  That's the reason for all the confusing stuff
 //       in the connect methods... so that connections always happen on the main thread.
 
-import java.applet.*;
-import javax.swing.*;
 //import netscape.javascript.*;
 import java.net.*;
 import java.io.*;
 
+import com.springrts.desktop.WeblobbyAppletPort;
+
 //public class JavaSocketBridge extends JApplet {
 public class JavaSocketBridge {
 
-        WeblobbyApplet parent;
+        WeblobbyAppletPort parent;
     
 	// Instance variables
 	//JSObject browser = null;		// The browser
@@ -40,7 +40,7 @@ public class JavaSocketBridge {
 	int port = -1;					// Port
 	boolean connectionDone = false;	// Thread synchronization
 
-        public JavaSocketBridge(WeblobbyApplet parent)
+        public JavaSocketBridge(WeblobbyAppletPort parent)
         {
             this.parent = parent;
         }

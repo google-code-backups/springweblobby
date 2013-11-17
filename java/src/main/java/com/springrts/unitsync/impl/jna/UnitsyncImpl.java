@@ -13,11 +13,12 @@
 
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package com.springrts.unitsync.impl.jna;
 
 
+import com.springrts.desktop.WeblobbyAppletPort;
 import com.springrts.unitsync.Unitsync;
 import com.springrts.unitsync.UnitsyncSimple;
 import com.springrts.unitsync.WeblobbyApplet;
@@ -38,23 +39,23 @@ import java.util.HashMap;
  */
 public class UnitsyncImpl implements Unitsync, UnitsyncSimple {
 
-        private String filePath;
-        private WeblobbyApplet weblobbyApplet;
+	private String filePath;
+	private WeblobbyAppletPort weblobbyApplet;
 	private HashMap loadOptions;
 
-           
-	/*public UnitsyncImpl() {
+
+	public UnitsyncImpl() {
 
 		String filePath = Preferences.userRoot().get("unitsync.path", "unitsync");
 
 		com.sun.jna.Native.register(UnitsyncLibrary.class,
 				NativeLibrary.getInstance(filePath));
-	}*/
+	}
 
-        public UnitsyncImpl(String filePath, WeblobbyApplet weblobbyApplet) {
+	public UnitsyncImpl(String filePath, WeblobbyAppletPort weblobbyApplet) {
 
-                this.filePath = filePath;
-                this.weblobbyApplet = weblobbyApplet;
+		this.filePath = filePath;
+		this.weblobbyApplet = weblobbyApplet;
 
 		loadOptions = new HashMap();
 		if( Platform.isLinux() )
@@ -64,24 +65,24 @@ public class UnitsyncImpl implements Unitsync, UnitsyncSimple {
 			// several unitsyncs.
 			// Are the flag values portable enough?
 			loadOptions.put(Library.OPTION_OPEN_FLAGS,
-				//0x00001 /* RTLD_LAZY */ |
-				0x00002 /* RTLD_NOW */ |
-				0x00008 /* RTLD_DEEPBIND */
-				); // RTLD_LOCAL is 0 and is default
+					//0x00001 /* RTLD_LAZY */ |
+					0x00002 /* RTLD_NOW */ |
+					0x00008 /* RTLD_DEEPBIND */
+					); // RTLD_LOCAL is 0 and is default
 		}
-                        
+
 		com.sun.jna.Native.register(UnitsyncLibrary.class,
 				NativeLibrary.getInstance(filePath, loadOptions));
 	}
-        
-        public void Unregister() {
+
+	public void Unregister() {
 		com.sun.jna.Native.unregister( UnitsyncLibrary.class );
 	}
-        public void Reregister() {
+	public void Reregister() {
 		com.sun.jna.Native.register(UnitsyncLibrary.class,
 				NativeLibrary.getInstance(this.filePath, loadOptions));
 	}
-        
+
 
 	@Override
 	public String getNextError() {
@@ -99,19 +100,19 @@ public class UnitsyncImpl implements Unitsync, UnitsyncSimple {
 
 	@Override
 	public int init(boolean isServer, int id) {
-            try
-            {
-                this.weblobbyApplet.echoJs( "Running init()" );
-		return UnitsyncLibrary.Init((byte)(isServer ? 1 : 0), id);
-            }
-            catch(Exception e)
-            {
-                for(int i=0; i<e.getStackTrace().length; i++)
-                {
-                    this.weblobbyApplet.echoJs( e.getStackTrace()[i]+"" );
-                }
-                return 0;
-            }
+		try
+		{
+			System.out.println("Running init()" );
+			return UnitsyncLibrary.Init((byte)(isServer ? 1 : 0), id);
+		}
+		catch(Exception e)
+		{
+			for(int i=0; i<e.getStackTrace().length; i++)
+			{
+				this.weblobbyApplet.echoJs( e.getStackTrace()[i]+"" );
+			}
+			return 0;
+		}
 	}
 
 	@Override
