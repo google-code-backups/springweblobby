@@ -16,7 +16,7 @@ define(
 		'dojo/topic',
 		'dojo/query',
 		'dojo/_base/window',
-		
+
 		'lwidgets/LobbySettings',
 		'lwidgets/ChatManager',
 		'lwidgets/BattleManager',
@@ -29,12 +29,12 @@ define(
 		'lwidgets/UserList',
 		'lwidgets/Juggler',
 		'lwidgets/ConfirmationDialog',
-		
+
 		'dojo/text!./templates/lobby.html?' + cacheString,
 		'dijit/_WidgetBase',
 		'dijit/_TemplatedMixin',
 		'dijit/_WidgetsInTemplateMixin',
-		
+
 		'dojo/_base/array',
 		'dojo/dom-construct',
 		'dojo/dom-style',
@@ -44,61 +44,61 @@ define(
 		'dojo/on',
 		'dojo/Deferred',
 		'dojo/_base/unload',
-		
+
 		"dojo/store/Memory",
 		"dojo/store/Observable",
-		
+
 		'dijit/Dialog',
 		'dijit/form/Button',
 		'dijit/form/Select',
 		'dijit/form/FilteringSelect',
-		
+
 		'dijit/layout/TabContainer',
 		// *** extras ***
-		
-		'dojo/text', 
-		
+
+		'dojo/text',
+
 		'dijit/layout/BorderContainer',
-		
+
 		'dijit/layout/ContentPane',
-		
+
 		'dijit/form/TextBox',
-		
-		
+
+
 		'dijit/_Templated',
-		
+
 		//'dojo/data',
-	
+
 	],
 	function(declare,
-			
+
 			//dojo, dijit,
 			topic,
 			query, win,
-			
+
 			LobbySettings,
 			ChatManager,
 			BattleManager,
 			Chatroom,
-			MBattleRoom, 
-			SBattleRoom, 
+			MBattleRoom,
+			SBattleRoom,
 			BattleMap,
 			User,
 			DownloadManager,
 			UserList,
 			Juggler,
 			ConfirmationDialog,
-			
+
 			template, WidgetBase, Templated, WidgetsInTemplate,
-			
+
 			array, domConstruct, domStyle, domAttr, lang,
 			xhr, on,
 			Deferred,
 			baseUnload,
-			
+
 			Memory,
 			Observable,
-			
+
 			Dialog,
 			Button,
 			Select,
@@ -107,12 +107,12 @@ define(
 
 
 declare("AppletHandler", [ ], {
-	
+
 	modList: null,
-	
+
 	settings: null,
 	path: '',
-	
+
 	os: '',
 	slash: '/',
 	commandStreamOut: null,
@@ -120,7 +120,7 @@ declare("AppletHandler", [ ], {
 	unitSyncs: null,
 	springHome: '',
 	applet: null,
-	
+
 	constructor: function(args)
 	{
 		var i;
@@ -146,7 +146,7 @@ declare("AppletHandler", [ ], {
 			this.slash = '\\';
 		}
 		this.unitSyncs = {};
-		
+
 		//echo( this.applet.getMacAddress() );
 		//echo( this.applet.getUserID() );
 	},
@@ -171,17 +171,17 @@ declare("AppletHandler", [ ], {
 		echo('sending packet', ip, port, 'hi' )
 		this.applet.sendSomePacket( ip, port, 'hi' );
 	},
-	
+
 	createDir: function(dir)
 	{
 		this.applet.createDir(dir);
 	},
-	
+
 	getSocketBridge: function()
 	{
 		return this.applet;
 	},
-	
+
 	getLogFile: function( type, logFile )
 	{
 		if( type === 'user' )
@@ -196,10 +196,10 @@ declare("AppletHandler", [ ], {
 		{
 			return this.springHome + '/weblobby/logs/##battleroom.txt';
 		}
-		
+
 		return logFile;
 	},
-	
+
 	writeLog: function( type, logFile, line )
 	{
 		var success;
@@ -211,7 +211,7 @@ declare("AppletHandler", [ ], {
 		logFile = this.getLogFile( type, logFile);
 		return this.applet.ReadFileLess( logFile, 50 );
 	},
-	
+
 	listDirs: function(path)
 	{
 		var dirs;
@@ -232,7 +232,7 @@ declare("AppletHandler", [ ], {
 		}
 		return files;
 	},
-	
+
 	getEngineVersions: function()
 	{
 		return this.listDirs( this.springHome + '/weblobby/engine')
@@ -241,7 +241,7 @@ declare("AppletHandler", [ ], {
 	{
 		return this.listFiles( this.springHome + '/demos' )
 	},
-	
+
 	refreshUnitsync: function(version) //fixme: prevent thrashing
 	{
 		var curVersion;
@@ -253,7 +253,7 @@ declare("AppletHandler", [ ], {
 			{
 				try
 				{
-				
+
 					console.log('Refreshing unitsync for version ' + version, curUnitSync.getSpringVersion() )
 					if( this.os === 'Mac' && version === '91.0' )
 					{
@@ -262,10 +262,10 @@ declare("AppletHandler", [ ], {
 					}
 					curUnitSync.Unregister()
 					curUnitSync.Reregister()
-					
+
 					curUnitSync.unInit();
-					
-					
+
+
 					curUnitSync.init(false, 7); // causes JVM exit problem on mac if called more than once for 91
 					curUnitSync.getPrimaryModCount();
 					curUnitSync.getMapCount();
@@ -285,9 +285,9 @@ declare("AppletHandler", [ ], {
 			{
 				this.refreshUnitsync(curVersion);
 			}
-			
+
 		}
-		
+
 	},
 
 	startSpringSettings: function(version)
@@ -300,7 +300,7 @@ declare("AppletHandler", [ ], {
 		this.lobby.setIsInGame(true)
 		this.runCommand('spring',[ springCommand ]);
 	},
-	
+
 	startSpringScript: function(script, version)
 	{
 		var scriptFile;
@@ -314,7 +314,7 @@ declare("AppletHandler", [ ], {
 		replayFile = this.springHome + '/demos/' + replay;
 		this.startSpring( [ replayFile ], version )
 	},
-	
+
 	startSpring: function(params, version)
 	{
 		var springCommand;
@@ -327,11 +327,11 @@ declare("AppletHandler", [ ], {
 		//scriptFile = this.springHome + '/weblobby/script.spring'
 		springCfg = this.getEngineCfg(version);
 		uikeysFile = this.getEnginePath(version) + '/uikeys.txt' ;
-		
+
 		//this.applet.createScript( scriptFile, script );
 		this.applet.deleteSpringSettings( springCfg );
 		this.applet.createUiKeys( uikeysFile );
-		
+
 		//cmdArray = [ springCommand, scriptFile ];
 		cmdArray = params;
 		if( this.settings.settings.springSafeMode )
@@ -340,37 +340,37 @@ declare("AppletHandler", [ ], {
 			cmdArray.unshift( '--safemode' );
 		}
 		cmdArray.unshift( springCommand );
-		
+
 		springPrefix = this.settings.settings.springPrefix.trim();
 		if( springPrefix !== '' )
 		{
 			cmdArray.unshift(springPrefix)
 		}
-		
+
 		this.lobby.setIsInGame(true)
 		this.runCommand('spring', cmdArray );
-		
+
 	},
-	
+
 	//cmdName must not contain slashes or single quotes.
 	runCommand: function(cmdName, cmds)
-	{		
+	{
 		this.commandStreamOut = [];
 		echo( 'Running command:', cmds );
 		setTimeout( function(applet, cmdName, cmds){
 			//console.log(cmds) //issue for chromium, see java
 			applet.runCommand(cmdName, cmds);
 		}, 1, this.applet, cmdName, cmds );
-		
+
 	},
-	
+
 	killCommand: function( processName )
 	{
 		setTimeout( function(applet, processName){
 			applet.killCommand( processName );
 		}, 1, this.applet, processName );
 	},
-	
+
 	commandStream: function(data)
 	{
 		var noDownloadMatch;
@@ -404,7 +404,7 @@ declare("AppletHandler", [ ], {
 		}
 
 	},
-	
+
 	downloadDownloader: function()
 	{
 		var targetPath;
@@ -436,23 +436,23 @@ declare("AppletHandler", [ ], {
 				//'libpr-downloader_static.a',
 			];
 		}
-		
+
 		if( typeof this.applet.downloadFile !== 'function' )
 		{
 			alert2('Java applet failed to load. Please make sure you installed java and enabled it in your browser.')
 			return;
 		}
 		this.javaLoaded = true;
-		
+
 		array.forEach( files, function(file) {
 			this.applet.downloadFile(
 				location.href.replace(/\/[^\/]*$/, '') + '/pr-downloader/' + this.os.toLowerCase() + '/' + file,
 				targetPath + file
 			);
 		}, this);
-		
+
 	},
-	
+
 	getEnginePath: function(version)
 	{
 		if( this.os === 'Windows' )
@@ -469,7 +469,7 @@ declare("AppletHandler", [ ], {
 		}
 		return path;
 	},
-	
+
 	getEngineExec: function(version)
 	{
 		return this.getEnginePath(version) + this.slash + 'spring';
@@ -478,7 +478,7 @@ declare("AppletHandler", [ ], {
 	{
 		return this.getEnginePath(version) + this.slash + 'springsettings.cfg';
 	},
-	
+
 	getUnitSyncPath: function(version)
 	{
 		if( this.os === 'Windows' )
@@ -495,7 +495,7 @@ declare("AppletHandler", [ ], {
 		}
 		return ''
 	},
-	
+
 	getUnitsync: function(version)
 	{
 		var path;
@@ -532,11 +532,11 @@ declare("AppletHandler", [ ], {
 	{
 		var unitSync, path;
 		path = this.getUnitSyncPath(version);
-		
+
 		/**/
 		//echo('loadUnitsync', path)
 		unitSync = this.applet.getUnitsync(path);
-		
+
 		if( unitSync !== null && typeof unitSync !== 'undefined' )
 		{
 			try
@@ -548,12 +548,12 @@ declare("AppletHandler", [ ], {
 					alert('There is a known bug when reloading Spring data for version 91.0 on Mac. You will need reload the page if you recently reloaded mods/maps.');
 					return;
 				}
-				
+
 				this.initOnce = true;
-				
+
 				unitSync.Unregister();
 				unitSync.Reregister();
-				
+
 				unitSync.init(false, 7); // causes JVM exit problem on mac if called more than once for 91
 				unitSync.getPrimaryModCount();
 				unitSync.getMapCount();
@@ -580,9 +580,9 @@ declare("AppletHandler", [ ], {
 				this.downloadManager.downloadEngine(version);
 			}
 		}
-		
+
 	},
-	
+
 	jsReadFileVFS: function(fd, size, version)
 	{
 		var path;
@@ -596,11 +596,11 @@ declare("AppletHandler", [ ], {
 			alert2('There was a problem accessing Spring. Please check that: \n- Java is enabled. \n- Your path to Spring in the settings tab is correct. \n\nYou will need to reload the page.');
 		}
 		return '';
-		
+
 	},
-	
+
 	//console.log( "TEST2: " + this.getWeblobbyApplet().getSpringVersion() );
-	
+
 	blank: null
 });//declare UnitSync
 
@@ -608,7 +608,7 @@ declare("AppletHandler", [ ], {
 return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 	pingPongTime: 30000,
 	lostPongs: 0,
-	
+
 	nick: '',
 	password: '',
 	//url : 'springrts.com',
@@ -619,16 +619,16 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 	localSpringVer: '',
 	serverClientVer: '',
 	localClientVer: '',
-	
+
 	udpPort: '',
 	serverMode: '',
-	
+
 	widgetsInTemplate: true,
 	connected : false,
 	authorized : false,
 	registering: false,
 	startMeUp: true,
-	
+
 	tc: null,
 	mainContainer: null,
 	connectButton: null,
@@ -640,79 +640,79 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 	renameButton: null,
 	changePassButton: null,
 	users: null,
-	
+
 	battleListStore: null,
 	battleList: null,
-	
+
 	juggler: null,
-	
+
 	appletHandler: null,
-	
+
 	javaLoaded: false,
-	
+
 	idleTimeout: null,
-	
+
 	newBattleReady: false,
 	newBattlePassword: '',
-	
-	downloadManagerPaneId: '??', 
+
+	downloadManagerPaneId: '??',
 	chatManagerPaneId: '??',
 	scriptPassword: '',
-	
+
 	//'constructor':function(){},
-	
+
 	templateString : template,
-	
+
 	weblobbyVersion:0.001,
-	
+
 	ResizeNeeded: function()
 	{
 		topic.publish('ResizeNeeded', {} );
 		this.userList.resizeAlready();
 	},
-	
+
 	onLinux64: function()
 	{
-		return ( navigator.oscpu === 'Linux x86_64' || navigator.platform === 'Linux x86_64' ) 
+		return ( navigator.oscpu === 'Linux x86_64' || navigator.platform === 'Linux x86_64' )
 	},
-	
+
 	postCreate : function() //lobby postCreate
 	{
 		this.inherited(arguments);
 		this.os = BrowserDetect.OS;
-		
+
 		if( this.onLinux64() )
 		{
 			this.os = 'Linux64'
 		}
-		
+
 		if( array.indexOf(['Windows', 'Linux', 'Linux64', 'Mac'], this.os ) === -1 )
 		{
 			alert2('Your operating system ('+ this.os +') is not compatible with Spring or is not recognized.');
 		}
-		
+
 		this.users = {};
 		this.bots = {};
-		
+
 		this.scriptPassword = 'swl' + Math.round( Math.random()*1000000 );
 		this.setupStore();
 		this.battleList = {};
-		
+
 		this.settings = new LobbySettings();
 		this.settingsPane.set('content', this.settings);
-		
+
 		this.appletHandler = new AppletHandler( {settings: this.settings, os: this.os, lobby: this } )
-		
+
 		if( !this.appletHandler.javaLoaded )
 		{
 			return;
 		}
-		
+
 		this.downloadManager = new DownloadManager( {settings: this.settings, appletHandler: this.appletHandler, os: this.os } );
-		
+
 		this.appletHandler.downloadManager = this.downloadManager;
 		this.settings.appletHandler = this.appletHandler;
-		
+
 		this.downloadManagerPane.set('content', this.downloadManager );
 		this.chatManager = new ChatManager( {settings: this.settings, users: this.users, appletHandler: this.appletHandler } );
 		this.chatManagerPane.set('content', this.chatManager );
@@ -740,17 +740,17 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		this.bottomPane.on('click', lang.hitch(this, function(){
 			console.log('b')
 			this.bottomPane.resize({'h':600});
-			
+
 		}));
 		this.topPane.on('click', lang.hitch(this, function(){
 			console.log('a')
 			this.bottomPane.resize({'h':200});
-			
+
 		}));
-		
+
 		/**/
 		var localUsers, localMe, localName;
-		
+
 		if( this.settings.settings.name === '' )
 		{
 			localName = '(Local)NoName';
@@ -768,7 +768,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			rank: 0,
 			local: true
 		});
-		
+
 		localMe.setStatusVals({
 			isReady: true,
 			isSpectator: true,
@@ -788,12 +788,12 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			//'scriptPassword':this.scriptPassword //remove
 		} );
 		this.singlePane.set('content', this.sBattleRoom );
-		
-		
+
+
 		this.userList = new UserList({name: 'server list'});
 		this.juggler = new Juggler({});
-		
-		
+
+
 		this.subscribe('Lobby/receive', function(data){ this.uberReceiver(data.msg) });
 		this.subscribe('Lobby/rawmsg', function(data){ this.uberSender(data.msg) });
 		this.subscribe('Lobby/notidle', 'setNotIdle');
@@ -804,16 +804,16 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.newBattleReady = true;
 			this.newBattlePassword = password
 		} );
-		
+
 		baseUnload.addOnUnload( lang.hitch(this, 'disconnect') );
-		
-		this.downloadManagerPaneId = this.downloadManagerPane.id; 
-		this.chatManagerPaneId = this.chatManagerPane.id; 
-		
-		
+
+		this.downloadManagerPaneId = this.downloadManagerPane.id;
+		this.chatManagerPaneId = this.chatManagerPane.id;
+
+
 		this.chatManagerPane.on( 'show', lang.hitch( this, function(){ this.chatManager.resizeAlready();  } ) );
-		
-		
+
+
 		setInterval( lang.hitch(this, 'pingPong'), this.pingPongTime, this );
 		setInterval( function(){
 			date = new Date;
@@ -822,9 +822,9 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				topic.publish( 'Lobby/chime', {chimeMsg: 'The time is now ' + date.toLocaleTimeString() } )
 			}
 		}, 60000);
-		
+
 	}, //postCreate
-	
+
 	addMotd: function(line)
 	{
 		domAttr.set( this.homeDivCenter, 'innerHTML', ( domAttr.get(this.homeDivCenter,'innerHTML') + '<br />' + line ) );
@@ -833,7 +833,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 	{
 		domAttr.set( this.homeDivCenter, 'innerHTML', '' );
 	},
-	
+
 	focusChat: function( data )
 	{
 		this.tc.selectChild( this.chatManagerPaneId );
@@ -842,8 +842,8 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 	{
 		this.tc.selectChild( this.downloadManagerPaneId );
 	},
-	
-	
+
+
 	setNotIdle: function()
 	{
 		var minutes;
@@ -857,7 +857,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.users[ this.nick ].setStatusVals( {isAway : false } );
 			this.users[ this.nick ].sendStatus();
 		}
-		
+
 		this.idleTimeout = setTimeout( lang.hitch(this, function(){
 			if(!this.users[ this.nick ].isInGame)
 			{
@@ -866,25 +866,25 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			}
 		}), 60000 * minutes );
 	},
-	
-	
+
+
 	setupStore: function()
 	{
-		this.battleListStore = Observable( new Memory({data: [], identifier: 'id'}) );	
+		this.battleListStore = Observable( new Memory({data: [], identifier: 'id'}) );
 	},
-	
+
 	joinClanChannel: function()
 	{
 		var clan;
-		
+
 		clan = this.users[this.nick].clan;
-		
+
 		if( clan !== '' )
 		{
 			//this.uberSender( 'JOIN ' + clan ); //server already forces this, as well as planetwars clan
 			return;
 		}
-		
+
 		clan = this.nick.match(/\[([^\]]*)\]/);
 		if( clan !== null && clan.length > 1 )
 		{
@@ -896,9 +896,9 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		var languageProp;
 		var language;
 		var country;
-		
+
 		languageProp = navigator.language;
-		
+
 		if( languageProp )
 		{
 			languageProp = languageProp.split('-')
@@ -907,15 +907,15 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.uberSender( 'JOIN ' + language );
 		}
 	},
-	
+
 	addUser: function(name, country, cpu)
 	{
 		this.users[name] = new User({ name: name, country: country, cpu: cpu });
-		
+
 		this.userList.addUser( this.users[name] ); //fixme
-		
+
 		this.chatManager.checkUser( name );
-		
+
 		if( name === this.nick )
 		{
 			//this.joinClanChannel(); // do this after user ext instead
@@ -928,12 +928,12 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		delete this.users[name];
 		this.chatManager.checkUser( name );
 	},
-	
+
 	getIngameTime: function()
 	{
 		this.uberSender( 'GETINGAMETIME');
 	},
-	
+
 	makeLoginDialog: function()
 	{
 		this.nameInput.set( 'value', this.settings.settings.name );
@@ -952,8 +952,8 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		this.registering = true;
 		this.loginButtonClick();
 	},
-	
-	
+
+
 	makeChangePassDialog: function()
 	{
 		addDialogToQ( this.changePassDialog );
@@ -968,7 +968,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		);
 		this.changePassDialog.hide();
 	},
-	
+
 	makeRenameDialog: function()
 	{
 		addDialogToQ( this.renameDialog );
@@ -983,8 +983,8 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		this.connectToSpring();
 		this.renameDialog.hide();
 	},
-	
-	
+
+
 	getHelpContent: function()
 	{
 		xhr('getversion.suphp', {
@@ -1007,7 +1007,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				domAttr.set( this.projectVersionSpan, 'innerHTML', data );
 			})
 		);
-		
+
 		setInterval(function(thisObj){
 			xhr('getversion.suphp', {
 				query: {type: 'svn'},
@@ -1017,13 +1017,13 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				lang.hitch(thisObj, function(data){
 					domAttr.set( thisObj.liveVersionSpan, 'innerHTML', data );
 				})
-			);	
+			);
 		}, 60000, this);
-		
+
 		//return div
 	},
-	
-	
+
+
 	startup2: function()
 	{
 		if( this.startMeUp )
@@ -1036,10 +1036,10 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.chatManager.startup2();
 			this.battleManager.startup2();
 			this.userList.placeAt(this.homeDivRight);
-			this.userList.startup2();		
+			this.userList.startup2();
 		}
 	},
-	
+
 	pingPong: function()
 	{
 		if( this.authorized )
@@ -1058,12 +1058,12 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			}
 		}
 	},
-	
+
 	agreementAccept: function()
 	{
 		var accept, htmlText;
 		var confirmationDlg
-		
+
 		htmlText = convertRTFtoHTML(this.agreementText);
 		htmlText = htmlText.replace('\n', '<br />')
 		confirmationDlg = new ConfirmationDialog({
@@ -1082,13 +1082,13 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			})
 		});
 	},
-	
+
 	disconnect: function()
 	{
 		this.battleManager.empty();
 		topic.publish( 'Lobby/chime', {chimeMsg: 'You have been disconnected.'} )
 		this.chatManager.connected = false;
-		
+
 		this.connectButton.set('label', 'Connect');
 		this.connectButton.set('iconClass', 'smallIcon disconnectedImage');
 		this.renameButton.set('disabled', true)
@@ -1100,7 +1100,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		this.socketDisconnect();
 		this.setJugglerState(null);
 	},
-	
+
 	uberReceiver: function(msg)
 	{
 		var msg_arr, cmd, channel, channels, message, rest, battleId, battleId,
@@ -1117,14 +1117,14 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			allianceId,
 			gameHash, ip, port
 		;
-		
+
 		msg_arr = msg.split(' ');
 		cmd = msg_arr[0];
-		
+
 		console.log('<TASSERVER> ' + msg);
 
 		this.lostPongs = 0;
-		
+
 		/*
 		REQUESTUPDATEFILE
 		OFFERFILE
@@ -1132,24 +1132,24 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		MUTELIST
 		MUTELISTBEGIN
 		MUTELISTEND
-		JOINBATTLEREQUEST 
+		JOINBATTLEREQUEST
 		JOINBATTLEACCEPT
 		JOINBATTLEDENY
 		OPENBATTLEFAILED
-		HANDICAP 
+		HANDICAP
 		KICKFROMBATTLE
 		FORCETEAMNO
 		FORCEALLYNO
 		FORCETEAMCOLOR
 		FORCESPECTATORMODE
 		REDIRECT
-		USERID 
+		USERID
 		< moderators >
-		TESTLOGIN 
+		TESTLOGIN
 		*/
-		
+
 		if(false){}
-		
+
 		else if( cmd === 'ACCEPTED' )
 		{
 			this.authorized = true;
@@ -1158,8 +1158,8 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.connectButton.set('iconClass', 'smallIcon connectedImage');
 			this.nick = msg_arr[1];	//fixes proper casing.
 			topic.publish('SetNick', {nick: this.nick} );
-			
-			
+
+
 			//zk frame
 			/**/
 			if( this.zkFrame )
@@ -1177,31 +1177,31 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				dateDay = (date.getDate() < 10 ? '0' : '') + date.getDate();
 				dateString = date.getFullYear() + '-' + month + '-' + dateDay;
 				loginString = this.nick + MD5.b64_md5( this.pass ) + dateString
-				
+
 				zkurl = 'http://zero-k.info/Missions/?asmallcake='
 					+ encodeURIComponent( MD5.b64_md5( loginString ) )
 					+ '&alogin=' + this.nick
 					+ '&weblobby=' + encodeURIComponent( location.href )
-				
+
 				//echo(loginString)
 				//echo(zkurl)
-				
+
 				zkInitUrl = 'http://zero-k.info/Home/Logon?login='+ this.nick +'&password=' + this.pass
-				
+
 				domAttr.set( this.zkInitFrame, 'src', zkInitUrl );
 				domAttr.set( this.zkFrame, 'src', zkurl );
 			}
 			/**/
-			
-			
+
+
 			this.chatManager.empty();
 			this.chatManager.connected = true;
-			
+
 			autoJoinChans = this.settings.settings.autoJoinChannelsList.split('\n');
 			array.forEach(autoJoinChans, function(chan){
 				this.uberSender( 'JOIN ' + chan.trim() );
 			}, this);
-			
+
 			friendsList = this.settings.settings.friendsList.split('\n');
 			array.forEach(friendsList, function(name){
 				if( name !== '' )
@@ -1209,14 +1209,14 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 					topic.publish('Lobby/chat/addprivchat', {name: name }  );
 				}
 			}, this);
-			
+
 			this.renameButton.set('disabled', null)
 			this.changePassButton.set('disabled', null)
 			this.ingameTimeButton.set('disabled', null)
-			
+
 			this.getSubscriptions();
 			this.uberSender('JOIN extension');
-			
+
 			this.pingPong();
 		}
 		else if( cmd === 'ACQUIREUSERID' )
@@ -1231,17 +1231,17 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			owner 			= msg_arr[3];
 			battlestatus	= msg_arr[4];
 			teamcolor		= msg_arr[5];
-			
+
 			bot_name = '<BOT>' + name;
-			
+
 			var userCountry = this.users[owner].country;
-			
+
 			this.users[bot_name] = new User({ name: name, owner: owner, ai_dll: rest, country: userCountry, battleId: battleId });
 			this.users[bot_name].setBattleStatus( battlestatus, teamcolor );
-			
+
 			//topic.publish('Lobby/battles/addplayer', { 'name':bot_name, 'battleId':battleId } );
 			this.battleRoom.addPlayerByName( bot_name );
-			
+
 		}
 		else if( cmd === 'ADDSTARTRECT' )
 		{
@@ -1268,7 +1268,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.agreementTextTemp = '';
 			this.agreementAccept();
 		}
-		
+
 		else if( cmd === 'BATTLECLOSED' )
 		{
 			battleId = msg_arr[1];
@@ -1318,11 +1318,11 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				passworded	: msg_arr[8] === '1',
 				rank			: msg_arr[9],
 				map_hash		: msg_arr[10],
-				
+
 				engineName	: msg_arr[11],
 				engineVersion	: msg_arr[12],
-				
-				
+
+
 				map 			: rest[0],
 				title			: rest[1],
 				game	 		: rest[2],
@@ -1336,7 +1336,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				isInBattle : true
 			} );
 		}
-		
+
 		else if( cmd === 'CHANNEL' )
 		{
 			channel = msg_arr[1];
@@ -1344,7 +1344,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			chanTopic = msg_arr.slice(3).join(' ');
 			topic.publish('Lobby/chat/channels', {channel: channel, userCount: userCount, topic: chanTopic }  )
 		}
-		
+
 		else if( cmd === 'CHANNELTOPIC' )
 		{
 			channel = msg_arr[1];
@@ -1353,7 +1353,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			message = msg_arr.slice(4).join(' ');
 			topic.publish('Lobby/chat/channel/topic', {channel: channel, name: name, msg: message, time: time }  )
 		}
-		
+
 		else if( cmd === 'CLIENTBATTLESTATUS' )
 		{
 			name = msg_arr[1];
@@ -1361,45 +1361,45 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			teamcolor = msg_arr[3];
 			this.users[name].setBattleStatus( battlestatus, teamcolor );
 		}
-		
+
 		else if( cmd === 'CLIENTIPPORT' )
 		{
 			var clientUdpSourcePort
-			
+
 			name 				= msg_arr[1];
 			ip 					= msg_arr[2];
 			clientUdpSourcePort = msg_arr[3];
-			
+
 			this.users[name].ip = ip;
 			this.users[name].clientUdpSourcePort = clientUdpSourcePort;
-			
+
 		}
 		else if( cmd === 'CLIENTSTATUS' )
 		{
 			name = msg_arr[1];
 			status = msg_arr[2];
 			this.users[name].setStatus(status);
-			
+
 			inProgress = this.users[name].isInGame;
 			blistStore = this.battleListStore;
-			
+
 			var items, item;
 			items = blistStore.query({ host: name });
 			array.forEach(items, function(curItem){
 				item = curItem;
 			}, this)
-			
-			
+
+
 			if( typeof item !== 'undefined' )
 			{
-			
+
 				topic.publish('Lobby/battles/updatebattle', {
 					battleId: item.id,
 					progress: inProgress
 				});
 			}
 		}
-		
+
 		else if( cmd === 'CLIENTS' )
 		{
 			channel = msg_arr[1];
@@ -1409,7 +1409,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				topic.publish('Lobby/chat/channel/addplayer', {channel: channel, name: name }  )
 			}
 		}
-		
+
 		else if( cmd === 'DENIED' )
 		{
 			rest = msg_arr.slice(1).join(' ');
@@ -1428,7 +1428,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		{
 			alert2('You are being removed from the battle room.');
 		}
-		
+
 		else if( cmd === 'HOSTPORT' )
 		{
 			port = msg_arr[1];
@@ -1455,7 +1455,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			rest = msg_arr.slice(2).join(' ');
 			alert2('Failed to join channel "' + channel + '" - ' + rest);
 		}
-		
+
 		else if( cmd === 'JOINBATTLE' )
 		{
 			battleId = msg_arr[1];
@@ -1485,17 +1485,17 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				scriptPassword: scriptPassword
 			} );
 			topic.publish('Lobby/battles/addplayer', {name: name, battleId: battleId, scriptPassword: scriptPassword }  )
-			
-			
-			
+
+
+
 		}
-		
+
 		else if( cmd === 'LEAVE' )
 		{
 			channel = msg_arr[1];
 			topic.publish('Lobby/chat/remroom', {name: channel} )
 		}
-		
+
 		else if( cmd === 'LEFT' )
 		{
 			channel = msg_arr[1];
@@ -1524,7 +1524,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		else if( cmd === 'OPENBATTLE' )
 		{
 			battleId = msg_arr[1];
-			
+
 			this.battleRoom.joinBattle( {battleId: battleId, hosting: true }  )
 		}
 		else if( cmd === 'PONG' )
@@ -1550,23 +1550,23 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		{
 			battleId		= msg_arr[1];
 			name			= msg_arr[2];
-			
+
 			bot_name = '<BOT>' + name;
-			
+
 			//topic.publish('Lobby/battles/remplayer', {'name': bot_name, 'battleId':battleId } );
 			this.battleRoom.remPlayerByName( bot_name );
-			
+
 			//this.remUser(bot_name); don't call this
 			delete this.users[name];
 		}
 		else if( cmd === 'REMOVESCRIPTTAGS' )
 		{
 			var scriptTags;
-			
+
 			scriptTags = msg_arr.slice(1);
 			array.forEach(scriptTags, function(key){
 				key = key.toLowerCase();
-				
+
 				this.battleRoom.removeScriptTag(key);
 				return;
 			}, this);
@@ -1612,7 +1612,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			message = msg_arr.slice(3).join(' ');
 			topic.publish('Lobby/chat/channel/playermessage', {channel: channel, name: name, msg: message, ex: true }  )
 		}
-		
+
 		else if( cmd === 'SAIDBATTLE' )
 		{
 			name = msg_arr[1];
@@ -1633,7 +1633,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			message = msg_arr.slice(2).join(' ');
 			topic.publish('Lobby/battle/playermessage', {battle: true, name: name, msg: message, ex: true }  )
 		}
-		
+
 		else if( cmd === 'SAIDPRIVATE' )
 		{
 			name = msg_arr[1];
@@ -1646,7 +1646,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		}
 		else if( cmd === 'SAYPRIVATE' )
 		{
-			
+
 			name = msg_arr[1];
 			message = msg_arr.slice(2).join(' ');
 			if(
@@ -1660,10 +1660,10 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			{
 				topic.publish('Lobby/chat/addprivchat', {name: name }  )
 			}
-			
+
 			topic.publish('Lobby/chat/user/playermessage', {userWindow: name, name: this.nick, msg: message }  )
 		}
-		
+
 		else if( cmd === 'SERVERMSG' || cmd === 'BROADCAST' )
 		{
 			rest = msg_arr.slice(1).join(' ');
@@ -1682,32 +1682,32 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		else if( cmd === 'SETSCRIPTTAGS' )
 		{
 			var scriptTags;
-			
+
 			scriptTags = msg_arr.slice(1).join(' ').split('\t');
 			array.forEach(scriptTags, function(scriptTag){
 				var key, val, scriptTagArr;
-				
+
 				scriptTagArr = scriptTag.split('=');
 				key = scriptTagArr[0];
 				val = scriptTagArr[1];
-				
+
 				//key = key.toLowerCase();
 				//val = val.toLowerCase();
-				
+
 				this.battleRoom.setScriptTag(key, val);
 			}, this);
 		}
-		
-		
+
+
 		else if( cmd === 'TASServer' )
 		{
 			this.serverSpringVer 	= msg_arr[2];
 			this.udpPort 			= msg_arr[3];
 			this.serverMode 		= msg_arr[4];
-			
+
 			this.appletHandler.udpPort = this.udpPort;
 			this.appletHandler.server = this.settings.settings.springServer;
-			
+
 			this.battleRoom.serverEngineVersion = this.serverSpringVer;
 			if(this.registering)
 			{
@@ -1719,7 +1719,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 				domAttr.set( this.homeDivCenter, 'innerHTML', '<b>MOTD</b>' );
 				this.addMotd( '<b>Server Version: ' +  msg_arr[1] +'</b>' );
 				this.addMotd( '<b>Server Spring Version: ' + this.serverSpringVer +'</b>' );
-				
+
 				this.login();
 			}
 		}
@@ -1749,9 +1749,9 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			bot_name = '<BOT>'+name;
 			this.users[bot_name].setBattleStatus( battlestatus, teamcolor );
 		}
-		
+
 	},//uberReceiver
-	
+
 	remBattle: function(battleId)
 	{
 		var battle;
@@ -1759,7 +1759,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		if( typeof battle !== 'undefined' )
 		{
 			this.users[ battle.host ].setStatusVals( {isHost : false } );
-			
+
 			//in case the battle was closed, there are no LEFTBATTLE triggers for the existing players.
 			var playerlist, player_name;
 			playerlist = battle.playerlist;
@@ -1767,7 +1767,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			{
 				this.users[ player_name ].setStatusVals( {isInBattle : false, battleId: '-1' } );
 			}
-			
+
 			this.battleListStore.remove(battleId);
 		}
 		if( this.battleRoom.battleId === battleId )
@@ -1775,10 +1775,10 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			alert2('The battleroom was closed.');
 			this.battleRoom.closeBattle();
 		}
-		
+
 		this.battleManager.removeBattle();
 	},
-	
+
 	said: function(channel, name, message)
 	{
 		var jsonCmd, jsonString, json;
@@ -1867,10 +1867,10 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			{
 				this.processUserExt(message);
 			}
-			
+
 			return;
 		}
-		
+
 		else if( this.newBattleReady && message === "I'm here! Ready to serve you! Join me!" )
 		{
 			this.newBattleReady = false;
@@ -1881,7 +1881,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		topic.publish('Lobby/chat/addprivchat', {name: name, msg: message }  );
 		topic.publish('Lobby/chat/user/playermessage', {userWindow: name, name: name, msg: message }  );
 	},
-	
+
 	processUserExt: function( message )
 	{
 		var userName;
@@ -1899,23 +1899,23 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			//todo: this only sends to userlist, send to battleplayerlist as well.
 		}
 	},
-	
+
 	setJugglerConfig: function( config )
 	{
 		this.juggler.config = config;
-		
+
 		this.battleManager.setQuickMatchButton( config.Active )
 	},
 	setJugglerState: function(state)
 	{
 		this.juggler.state = state;
 	},
-	
+
 	getSubscriptions: function()
 	{
 		this.uberSender('SAYPRIVATE Nightwatch !listsubscriptions');
 	},
-	
+
 	setUserExt: function( userName, message, userExtVal, userVal )
 	{
 		var val
@@ -1930,21 +1930,22 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			}
 		}
 	},
-				
-				
-	
+
+
+
 	//connection
 	uberSender: function(message)
 	{
 		console.log( "<LOCAL> " + message );
 		if(this.connected)
 		{
-			this.socketSend( message );
+			//this.socketSend( message );
+            uberSocket.send( message );
 		}
 	},
-	
+
 	login: function ()
-	{	
+	{
 		var message, compatFlags, osCpuHack;
 		this.nick = this.settings.settings.name;
 		this.pass = this.settings.settings.password;
@@ -1965,7 +1966,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		message = 'LOGIN ' + this.nick + ' ' + MD5.b64_md5( this.pass ) + ' ' + osCpuHack + ' * SpringWebLobby ' + this.weblobbyVersion + '\t' + this.appletHandler.getUserID() + '\t' + compatFlags;
 		this.uberSender(message)
 	},
-	
+
 	connectButtonPush: function()
 	{
 		if( this.settings.settings.name === '' || this.settings.settings.password === ''  )
@@ -1973,7 +1974,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.makeLoginDialog();
 			return;
 		}
-		
+
 		if(this.connected)
 		{
 			//this.tc.destroyDescendants();
@@ -1984,7 +1985,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			this.connectToSpring();
 		}
 	},
-	
+
 	connectToSpring: function()
 	{
 		this.battleRoom.closeBattle();
@@ -1994,50 +1995,55 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		this.connectButton.set('iconClass', 'smallIcon connectingImage');
 		topic.publish('Lobby/connecting', {})
 	},
-	
+
 	// Connect to a given url and port
 	socketConnect: function (url, port)
 	{
-		this.getSocketBridge().connect(url, port);
+		//this.getSocketBridge().connect(url, port);
+        uberSocket = new WebSocket("ws://localhost:8260");
+        uberSocket.onmessage = function(evt){
+            uberCommunicator(evt.data);
+        }
 	},
-	
+
 	// Disconnect
 	socketDisconnect: function ()
 	{
-		this.getSocketBridge().disconnect();
+		//this.getSocketBridge().disconnect();
+        uberSocket.close();
 	},
-	
+
 	// Write something to the socket
 	socketSend: function (message)
 	{
 		this.getSocketBridge().send(message);
 	},
-	
+
 	setIsInGame: function(inGame)
 	{
 		//if you're not logged in but start a single player game.
 		if( !( this.nick in this.users ) )
 		{
-			return; 
+			return;
 		}
 		this.users[ this.nick ].setStatusVals( {isInGame : inGame } );
 		this.users[ this.nick ].sendStatus();
-		
+
 		topic.publish('Lobby/setAllowNotifySound', !inGame);
 	},
-	
+
 	// Report an error
 	onSocketError: function (message)
 	{
 		alert2(message);
 	},
-	
+
 	// Get the applet object
 	getSocketBridge: function()
 	{
 		return this.appletHandler.getSocketBridge();
 	},
-	
+
 	reAddOptionsToSelect: function( select, options )
 	{
 		select.removeOption(select.getOptions());
@@ -2045,14 +2051,14 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 			select.addOption(option)
 		});
 	},
-	
+
 	makeReplayDialog: function()
 	{
 		var replayFiles
 		var engineVersions
 		var engineOptions
 		var replayOptions
-		
+
 		engineVersions = this.appletHandler.getEngineVersions();
 		engineOptions = [];
 		array.forEach( engineVersions, function(engineVersion){
@@ -2060,8 +2066,8 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		});
 		engineOptions.reverse();
 		this.reAddOptionsToSelect(this.engineSelect, engineOptions);
-		
-		
+
+
 		replayFiles = this.appletHandler.getReplays()
 		replayOptions = [];
 		array.forEach( replayFiles, function(replayFileName){
@@ -2071,15 +2077,15 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 		this.replaySelect.set( 'queryExpr', '*${0}*' );
 		//this.replaySelect.set( 'highlightMatch', 'all' );
 		this.replaySelect.set( 'store', new Memory({ data: replayOptions }) )
-		
+
 		this.replayDialog.show();
 	},
-	
+
 	startReplayButtonClick: function()
 	{
 		this.appletHandler.startSpringReplay( this.replaySelect.get('value'), this.engineSelect.get('value') );
 	},
-	
+
 	blank: null
 }); }); //declare lwidgets.Lobby
 
