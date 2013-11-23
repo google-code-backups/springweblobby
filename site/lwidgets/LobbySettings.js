@@ -631,7 +631,7 @@ define(
 				
 				colorDiv = domConstruct.create('div', {
 					//'innerHTML':'&nbsp;&nbsp;&nbsp;',
-					class: name,
+					'class': name,
 					style: {
 						position: 'absolute',
 						top: '0px',

@@ -245,7 +245,7 @@ define(
 				tabPosition: this.tabPosition,
 				doLayout: this.doLayout,
 				containerId: this.id,
-				class: cls,
+				'class': cls,
 				nested: this.nested,
 				useMenu: this.useMenu,
 				useSlider: this.useSlider,

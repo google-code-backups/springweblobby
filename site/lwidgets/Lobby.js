@@ -127,7 +127,7 @@ declare("AppletHandler", [ ], {
 		declare.safeMixin(this, args);
 		this.commandStreamOut = [];
 		this.modList = [];
-		this.applet = document.WeblobbyApplet;
+		this.applet = QWeblobbyApplet;
 		if( this.applet.init === undefined )
 		{
 			alert('Java applet failed to load. Make sure nothing is blocking it. \n If you\'re using a Mac, see <a href="http://helpx.adobe.com/x-productkb/global/install-java-jre-mac-os.html">this page</a> for help on installing Java.');
@@ -2004,7 +2004,7 @@ return declare([ WidgetBase, Templated, WidgetsInTemplate ], {
 	// Disconnect
 	socketDisconnect: function ()
 	{
-		this.getSocketBridge().disconnect();
+		this.getSocketBridge().disconnectBridge();
 	},
 	
 	// Write something to the socket

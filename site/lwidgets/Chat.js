@@ -518,21 +518,13 @@ define(
 		line = makeLinks(line, this.settings.settings.linkColor);
 		
 		newNode = domConstruct.create('div', {
-			style: {
-				display: 'table',
-				tableLayout: 'fixed',
-				width: '100%',
-			},
+			style: { display: 'table-row' },
 		}, toPlace )
 		
 		timeStampDiv= domConstruct.create('div', {
 			innerHTML: timeStamp2 + '&nbsp;',
 			style: {
 				display: 'table-cell',
-				width: '6em',
-				width: 'intrinsic',
-				width: 'max-content',
-				width: '-moz-max-content',
 				minWidth: '50px',
 				whiteSpace: 'nowrap',
 				letterSpacing: '-1px',
@@ -544,10 +536,6 @@ define(
 		lineSourceDiv = domConstruct.create('div', {}, newNode );
 		domStyle.set(lineSourceDiv, {
 			display: 'table-cell',
-			width: '6em',
-			width: 'intrinsic',
-			width: 'max-content',
-			width: '-moz-max-content',
 			minWidth: '50px',
 			whiteSpace: 'nowrap',
 			textAlign: 'right',
@@ -568,7 +556,7 @@ define(
 				selectLink = domConstruct.create('a', {
 					innerHTML: sourceOut,
 					style: sourceLinkStyle,
-					class: sourceClass,
+					'class': sourceClass,
 					href: '#',
 					onclick: lang.hitch(this, function(e){
 						event.stop(e);
@@ -580,7 +568,7 @@ define(
 			{
 				domAttr.set(lineSourceDiv, {
 					innerHTML: sourceOut,
-					class: sourceClass
+					'class': sourceClass
 				})
 			}
 			
@@ -604,7 +592,7 @@ define(
 				paddingTop: '3px',
 				verticalAlign: 'top'
 			},
-			class : lineClass
+			'class' : lineClass
 		}, newNode );
 		
 		//add icon to load image

@@ -346,7 +346,7 @@ return declare( [ WidgetBase ], {
 		
 		
 		
-		filterTitleDiv = domConstruct.create('div', { style: {fontWeight: 'bold'}, class: 'topicDiv' }, this.filterDiv );
+		filterTitleDiv = domConstruct.create('div', { style: {fontWeight: 'bold'}, 'class': 'topicDiv' }, this.filterDiv );
 		
 		this.filterBodyDiv = domConstruct.create('div', {
 			style: {

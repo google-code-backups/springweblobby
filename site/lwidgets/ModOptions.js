@@ -151,7 +151,7 @@ define(
 						name: optionName,
 						type: optionType,
 						desc: optionDesc,
-						default: optionDefault,
+						'default': optionDefault,
 						value: optionDefault
 					};
 					if( optionType === 'number' )
@@ -361,7 +361,7 @@ define(
 		
 		if( data.value === null )
 		{
-			data.value = data.default;
+			data.value = data['default'];
 		}
 		if( option.type === 'bool' )
 		{
@@ -556,7 +556,7 @@ define(
 			value = this.curChanges[option.key];
 		}
 		
-		change = value !== option.default;
+		change = value !== option['default'];
 		domConstruct.destroy( this.changeDivs[option.key] )
 		
 		if( change )
