@@ -25,7 +25,8 @@ This table compares common features of popular clients and weblobby. If a new fe
 || Local Single Player || Y || Y || N ||
 || Local SP Start positions || N || Y || N/A ||
 || Replay hosting || Untested (2) || ? || N ||
-|| Replay viewing || Y || Y || ? ||
+|| Local replay viewing || Y || Y || ? ||
+|| Zk.info replay viewing || N || N || Y ||
 || Multi-Engine Support || Y || ? || Y ||
 
 (1) Interface to start a springie room, set springie modoptions.
