@@ -3,10 +3,12 @@
 = Engine "stuck at 100%" =
 
 Apparently pr-downloader gets the 7z archive, starts extracting, creates the 96.0 dir, but no unitsync.dll or spring.exe can be found inside.
+In weblobby.log it complains about being unable to load unitsync because "127" which is ERROR_MODULE_NOT_FOUND.
 
 = pr-downloader fails to download =
 
 For some people it fails to download for some reason.
+Causes errors lile "Cannot start command: Downloading Map Eye_Of_Horus_v2: in file '..\Boost.Process-0.5/boost/process/windows/initializers/throw_on_error.hpp', line 24: CreateProcess() failed".
 
 = Game download stuck at 0% =
 
