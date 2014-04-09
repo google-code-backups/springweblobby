@@ -1,0 +1,21 @@
+#summary Common problems steam people have so that I don't forget.
+
+= Engine "stuck at 100%" =
+
+Apparently pr-downloader gets the 7z archive, starts extracting, creates the 96.0 dir, but no unitsync.dll or spring.exe can be found inside.
+
+= pr-downloader fails to download =
+
+For some people it fails to download for some reason.
+
+= Game download stuck at 0% =
+
+Probably excessive server load.
+
+= Cannot create process: assign: wrong argument =
+
+Windows XP
+
+= Cannot load unitsync: 87 =
+
+Windows with KB2533623 not installed.
