@@ -7,3 +7,9 @@ Example to run it with a custom URL
 {{{
 ./weblobby -url http://localhost:123
 }}}
+
+Other command line options:
+ * -debug - enable debug output
+ * -debug-cmd - include command output in the log (pr-downloader nagging, spring console output)
+ * -debug-net - print message sent to and received from uberserver
+ * -debug-all - all of the above
