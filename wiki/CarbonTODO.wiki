@@ -22,7 +22,7 @@
 
 - chat entry line has geborked border-image (element size too small for proper rendering)
 
-- minor border-image corruptions on chat tabs
+- minor border-image corruptions on chat tabs (even if it looks cool)
 
 4) Images need to be carbonized:
 
