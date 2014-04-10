@@ -1,14 +1,6 @@
 #summary Stuff left to fix in Carbon theme.
 
-1) Dropdown styles
-
-- multiplayer map selection
-
-- some singleplayer stuff
-
-- generally make them less bland
-
-2) Button styles
+1) Button styles
 
 - get rid of gradient highlights, hack up proper chili-esque style
 
@@ -16,7 +8,7 @@
 
 - chat-tab left buttons have icons at weird offsets
 
-3) Edges
+2) Edges
 
 - some rounded elements have background-colors and no border-radius, ex: topic, chat. Should be transparent and/or border-radius.
 
@@ -24,7 +16,7 @@
 
 - minor border-image corruptions on chat tabs (even if it looks cool)
 
-4) Images need to be carbonized:
+3) Images need to be carbonized:
 
 - checkboxes
 
@@ -36,12 +28,12 @@
 
 - add more
 
-5) Sliders need to be carbonized
+4) Sliders need to be carbonized
 
 - webkit allows browser scrollbars to be styled.
 
 - use chili sliders for glory and profit.
 
-6) Paddings
+5) Paddings
 
 - chat active tab X-button is too far to right, overlays border-image
