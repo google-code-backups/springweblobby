@@ -1,6 +1,10 @@
 #summary QT Development help
 
-= Introduction =
+= Command line options =
+
+== Custom URL ==
+
+-url URL - forces weblobby to open URL instead of the default one. Very useful for testing with file:// urls and localhost.
 
 Example to run it with a custom URL
 
@@ -8,8 +12,15 @@ Example to run it with a custom URL
 ./weblobby -url http://localhost:123
 }}}
 
-Other command line options:
+== Debugging options ==
+
  * -debug - enable debug output
  * -debug-cmd - include command output in the log (pr-downloader nagging, spring console output)
- * -debug-net - print message sent to and received from uberserver
+ * -debug-net - print all data sent to and received from uberserver
  * -debug-all - all of the above
+
+== Prepackaged data ==
+
+-prepackaged-data PATH - The path should be absolute and point to a folder. On lobby start everything inside the folder will be moved to spring home dir. The folder itself won't be removed. If it doesn't exist, an error is shown.
+
+E.g. if you have c:\evo_data that has evo_data/pool, evo_data/packages, evo_data/weblobby/engine, evo_data/maps; you use -prepackaged-data c:\evo_data
