@@ -25,6 +25,7 @@
 - minor border-image corruptions on chat tabs
 
 4) Images need to be carbonized:
+
 - checkboxes
 
 - radiobuttons
