@@ -30,10 +30,18 @@
 
 - radiobuttons
 
-- etc
+- dropdown buttons
+
+- tab selection buttons (when window made tiny)
+
+- add more
 
 5) Sliders need to be carbonized
 
 - webkit allows browser scrollbars to be styled.
 
 - use chili sliders for glory and profit.
+
+6) Paddings
+
+- chat active tab X-button is too far to right, overlays border-image
