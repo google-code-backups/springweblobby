@@ -21,3 +21,11 @@ Windows XP
 = Cannot load unitsync: 87 =
 
 Windows with KB2533623 not installed.
+
+= The package file is corrupted =
+
+Sometimes the file corresponding to the game in Spring/packages becomes corrupted on download and pr-download thinks it's already downloaded and doesn't do anything. In weblobby.log you see unitsync loading successfully, pr-downloader getting launched and finishing, and that repeats every time the user joins a battle. Deleting Spring/packages solved that in all cases that I saw.
+
+= Paths with non-ASCII characters =
+
+If the path to My games/Spring contains non-ASCII characters, the lobby fails to work. Sorry, my fuckup.
