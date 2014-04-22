@@ -6,8 +6,6 @@
 
 - special color button is special, needs to have button style
 
-- -chat-tab left buttons have icons at weird offsets-
-
 2) Edges
 
 - some rounded elements have background-colors and no border-radius, ex: topic, chat. Should be transparent and/or border-radius.
