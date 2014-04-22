@@ -6,7 +6,7 @@
 
 - special color button is special, needs to have button style
 
-- chat-tab left buttons have icons at weird offsets
+- -chat-tab left buttons have icons at weird offsets-
 
 2) Edges
 
