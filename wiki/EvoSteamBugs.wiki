@@ -4,15 +4,19 @@
 
 Windows XP
 
+= The package file is corrupted =
+
+Sometimes the file corresponding to the game in Spring/packages becomes corrupted on download and pr-download thinks it's already downloaded and doesn't do anything. In weblobby.log you see unitsync loading successfully, pr-downloader getting launched and finishing, and that repeats every time the user joins a battle. Deleting Spring/packages solved that in all cases that I saw.
+
+= GLSL errors and "can't execute gameframe #2" =
+
+I've seen two cases where a specific user triggered glsl and "can't execute gameframe #2" error spam for <b>all players</b> if he joined on game start. In both cases reinstalling the game (including deleting Documents/My games/Spring of course) solved the problem.
+
 <hr>
 
 = Rare problems =
 
 These were noticeable during the first days of Steam release, but there has been no sight of them ever since.
-
-== The package file is corrupted ==
-
-Sometimes the file corresponding to the game in Spring/packages becomes corrupted on download and pr-download thinks it's already downloaded and doesn't do anything. In weblobby.log you see unitsync loading successfully, pr-downloader getting launched and finishing, and that repeats every time the user joins a battle. Deleting Spring/packages solved that in all cases that I saw.
 
 == Engine "stuck at 100%" ==
 
